@@ -1,0 +1,14 @@
+import os
+import shutil
+
+def organize_files_by_extension(folder_path):
+    for filename in os.listdir(folder_path):
+        file_path = os.path.join(folder_path, filename)
+        if os.path.isfile(file_path):
+            ext = filename.split('.')[-1]
+            ext_folder = os.path.join(folder_path, ext)
+            os.makedirs(ext_folder, exist_ok=True)
+            shutil.move(file_path, os.path.join(ext_folder, filename))
+
+# Sample usage
+organize_files_by_extension("your_folder_path_here")
