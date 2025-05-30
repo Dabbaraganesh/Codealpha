@@ -1,0 +1,29 @@
+import yfinance as yf
+
+portfolio = {}
+
+def add_stock(symbol, shares):
+    stock = yf.Ticker(symbol)
+    portfolio[symbol] = {'shares': shares, 'price': stock.info['regularMarketPrice']}
+
+def remove_stock(symbol):
+    if symbol in portfolio:
+        del portfolio[symbol]
+
+def show_portfolio():
+    total_value = 0
+    print("\nYour Portfolio:")
+    for symbol, data in portfolio.items():
+        stock = yf.Ticker(symbol)
+        price = stock.info['regularMarketPrice']
+        value = price * data['shares']
+        total_value += value
+        print(f"{symbol}: {data['shares']} shares at ${price:.2f} → ${value:.2f}")
+    print(f"Total Portfolio Value: ${total_value:.2f}\n")
+
+# Sample usage
+add_stock("AAPL", 10)
+add_stock("GOOGL", 5)
+show_portfolio()
+remove_stock("GOOGL")
+show_portfolio()
